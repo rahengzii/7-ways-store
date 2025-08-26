@@ -103,6 +103,7 @@
                         </ul>
                     </nav>
                 </div>
+                <!-- count amout of cart -->
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
                         <a href="{{ route('shop.detail') }}" class="search-switch"><img src="{{ asset('img/icon/search.png') }}" alt=""></a>
@@ -134,49 +135,49 @@
             .then(() => window.location.href = '/login');
     }
 
-    $(document).ready(function() {
-        const userEmail = '{{ session("user.email") || "guest" }}';
-        const cartKey = `mf_cart_${userEmail}`;
+    // $(document).ready(function() {
+    //     const userEmail = '{{ session("user.email") || "guest" }}';
+    //     const cartKey = `mf_cart_${userEmail}`;
 
-        function updateCartHeader() {
-            let cartItems = JSON.parse(localStorage.getItem(cartKey) || '[]');
-            const cartCount = cartItems.reduce((sum, item) => sum + item.qty, 0);
-            const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
-            $('.cart__count').text(cartCount);
-            $('.header__nav__option .price').text(`$${subtotal.toFixed(2)}`);
-        }
+    //     function updateCartHeader() {
+    //         let cartItems = JSON.parse(localStorage.getItem(cartKey) || '[]');
+    //         const cartCount = cartItems.reduce((sum, item) => sum + item.qty, 0);
+    //         const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
+    //         $('.cart__count').text(cartCount);
+    //         $('.header__nav__option .price').text(`$${subtotal.toFixed(2)}`);
+    //     }
 
-        $('.add-cart').on('click', function(e) {
-            e.preventDefault();
-            const $product = $(this).closest('.product__item');
-            const productName = $product.find('.product__item__text h6').text();
-            const productPrice = parseFloat($product.find('.product__item__text h5').text().replace('$', ''));
-            const productImg = $product.find('.product__item__pic').data('setbg');
-            const colorLabel = $product.find('.product__color__select label.active');
-            const productColor = colorLabel.length ? colorLabel.attr('class').split(' ')[1] : 'default';
+    //     $('.add-cart').on('click', function(e) {
+    //         e.preventDefault();
+    //         const $product = $(this).closest('.product__item');
+    //         const productName = $product.find('.product__item__text h6').text();
+    //         const productPrice = parseFloat($product.find('.product__item__text h5').text().replace('$', ''));
+    //         const productImg = $product.find('.product__item__pic').data('setbg');
+    //         const colorLabel = $product.find('.product__color__select label.active');
+    //         const productColor = colorLabel.length ? colorLabel.attr('class').split(' ')[1] : 'default';
 
-            let cartItems = JSON.parse(localStorage.getItem(cartKey) || '[]');
-            const existingItem = cartItems.find(item => item.name === productName && item.color === productColor);
+    //         let cartItems = JSON.parse(localStorage.getItem(cartKey) || '[]');
+    //         const existingItem = cartItems.find(item => item.name === productName && item.color === productColor);
 
-            if (existingItem) {
-                existingItem.qty += 1;
-            } else {
-                cartItems.push({
-                    name: productName,
-                    price: productPrice,
-                    img: productImg,
-                    qty: 1,
-                    color: productColor
-                });
-            }
+    //         if (existingItem) {
+    //             existingItem.qty += 1;
+    //         } else {
+    //             cartItems.push({
+    //                 name: productName,
+    //                 price: productPrice,
+    //                 img: productImg,
+    //                 qty: 1,
+    //                 color: productColor
+    //             });
+    //         }
 
-            localStorage.setItem(cartKey, JSON.stringify(cartItems));
-            updateCartHeader();
-            alert(`${productName} (${productColor}) added to cart!`);
-        });
+    //         localStorage.setItem(cartKey, JSON.stringify(cartItems));
+    //         updateCartHeader();
+    //         alert(`${productName} (${productColor}) added to cart!`);
+    //     });
 
-        updateCartHeader();
-    });
+    //     updateCartHeader();
+    // });
     </script>
 
     <section class="breadcrumb-option">
